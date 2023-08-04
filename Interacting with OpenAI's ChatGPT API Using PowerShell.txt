@@ -1,0 +1,20 @@
+# Define the API endpoint URL
+$apiUrl = "https://api.openai.com/v1/engines/davinci/completions"
+
+# Define your API key
+$apiKey = "your_api_key_here"
+
+# Define the text prompt to send to the model
+$chatPrompt = "Tell me a joke."
+
+# Create a JSON object with the prompt
+$jsonObject = @{ prompt = $chatPrompt } | ConvertTo-Json
+
+# Make the HTTP POST request to the API with the API key in the headers
+$response = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $jsonObject -ContentType "application/json" -Headers @{ "Authorization" = "Bearer $apiKey" }
+
+# Get the response from the API
+$chatResponse = $response.message
+
+# Display the generated response
+Write-Host "ChatGPT Response: $chatResponse"
